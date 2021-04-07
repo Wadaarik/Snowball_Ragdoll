@@ -45,6 +45,7 @@ export default class Main{
 
             // this.initPhysics();
             this.initObjects();
+            
             this.sphere = this.objects.children[0];
         });
 
@@ -68,11 +69,11 @@ export default class Main{
         var keyCode = event.keyCode;
         if (keyCode == 37) {
             if(this.sphere.position.x > -3){
-                this.sphere.position.x -= 3;
+                this.sphere.position.x -= .2;
             }
         } else if (keyCode == 39) {
             if(this.sphere.position.x < 3){
-                this.sphere.position.x += 3;
+                this.sphere.position.x += .2;
             }
         }
 
@@ -81,6 +82,7 @@ export default class Main{
 
         this.objects = new Objects();
         // console.log(this.objects);
+
         this.scene.add(this.objects);
 
     }

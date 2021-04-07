@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'favoritLight';
+    src: url('fonts/ABCFavorit-Light.woff2') format('woff2'),
+         url('fonts/ABCFavorit-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

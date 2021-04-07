@@ -36,15 +36,47 @@ export default class Objects extends THREE.Object3D{
 
 
         // Skieurs
+        var scene = this;
         const loader = new GLTFLoader();
-        loader.load("./assets/skieur.glb", gltf => {
-            this.add(gltf.scene);
-        }, undefined,
-        error => {
-            console.log(error);
+        loader.load('./assets/tree0.glb', function(gltf){
+            console.log(gltf.scene);
+            console.log(scene);
+            console.log(gltf.scene.children[0]);
+            gltf.scene.children[0].material = new THREE.MeshToonMaterial( {color: 0x00FF00} );
+            gltf.scene.children[0].position.z = -150;
+            scene.add(gltf.scene.children[0]);
+            console.log(scene);
         });
 
+        // loader.load(
+        //     "./assets/skieur.glb",
+        //     ( glb ) => {
+        //         // called when the resource is loaded
+        //         this.position.x = 0;
+        //         this.position.y = 1;
+        //         this.position.z = 50;
+        //         this.add( glb.scene );
+        //     },
+        //     ( xhr ) => {
+        //         // called while loading is progressing
+        //         console.log( `${( xhr.loaded / xhr.total * 100 )}% loaded` );
+        //     },
+        //     ( error ) => {
+        //         // called when loading has errors
+        //         console.error( 'An error happened', error );
+        //     },
+        // );
+        //    function(glb){
+        //    glb.scene.traverse(function(child){
+        //        var instancedMesh = new THREE.InstancedMesh(child.geometry, child.material, 1);
+        //        instancedMesh.setMatrixAt(0, skieur.matrix);
+        //        scene.add(instancedMesh);
+        //    });
+        //    scene.add( glb.scene);
+        //});
 
+
+        
         this.add( this.snowballMesh );
         this.add( this.groundMesh );
     }
@@ -54,7 +86,7 @@ export default class Objects extends THREE.Object3D{
         if(this.snowballMesh.rotation.x > -60){
             this.snowballMesh.rotation.x *= 1.001;
         } else {
-            this.snowballMesh.rotation.x -= 1.0619;
+            this.snowballMesh.rotation.x -= 0.0619;
         }
 
         // console.log(this.snowballMesh.rotation.x);
