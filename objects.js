@@ -8,15 +8,13 @@ export default class Objects extends THREE.Object3D{
         this.update = this.update.bind(this);
 
         this.snowball = new THREE.SphereGeometry(1, 32, 32);//la boule de neige
-        const ballMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide  } );//créer le material de la snowball
-        ballMaterial.metalness = .1;
-        ballMaterial.roughness = .4;
-        ballMaterial.envMap = Global.instance.envMap;
-        ballMaterial.envMapIntensity = .4;
-        ballMaterial.map = new THREE.TextureLoader().load("./assets/snow_jpg/snow_field_aerial_AO_1k.jpg");
-        ballMaterial.map.anisotropy = 12;
-        ballMaterial.map.wrapS = ballMaterial.map.wrapT = THREE.RepeatWrapping;//repete la texture
-        ballMaterial.map.repeat.set(3, 1);
+        const ballMaterial = new THREE.MeshToonMaterial( { color: 0xffffff  } );//créer le material de la snowball
+        // ballMaterial.envMap = Global.instance.envMap;
+        // ballMaterial.envMapIntensity = .4;
+        // ballMaterial.map = new THREE.TextureLoader().load("./assets/snow_jpg/snow_field_aerial_AO_1k.jpg");
+        // ballMaterial.map.anisotropy = 12;
+        // ballMaterial.map.wrapS = ballMaterial.map.wrapT = THREE.RepeatWrapping;//repete la texture
+        // ballMaterial.map.repeat.set(3, 1);
         // ballMaterial.normalMap = new THREE.TextureLoader().load("./assets/snow_png/snow_field_aerial_nor_1k.png");
         // ballMaterial.normalMap.wrapS = ballMaterial.map.wrapT = THREE.RepeatWrapping;//repete la texture
         // ballMaterial.normalMap.repeat.set(3, 1);
@@ -30,7 +28,7 @@ export default class Objects extends THREE.Object3D{
 
 
         this.ground = new THREE.BoxGeometry(9, 1, 1000);//sol
-        const groundMaterial = new THREE.MeshBasicMaterial( {color: 0xCECECE, side: THREE.DoubleSide } );
+        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xF0F0F0 } );
         this.groundMesh = new THREE.Mesh( this.ground, groundMaterial );
         this.groundMesh.position.z = -480;
         this.groundMesh.position.y = -1;

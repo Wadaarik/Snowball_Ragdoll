@@ -2,6 +2,8 @@ import * as THREE from "./lib/three.module.js";
 import Objects from "./objects.js";
 import Global from "./global.js";
 
+import { OutlineEffect } from '/lib/OutlineEffect.js';
+
 
 export default class Main{
     constructor() {
@@ -13,6 +15,7 @@ export default class Main{
         this.scene;
         this.camera;
         this.renderer;
+        this.particleLight;
 
         this.init();
     }
@@ -21,7 +24,10 @@ export default class Main{
 
         this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );//camera
 
+        this.scene.add( new THREE.AmbientLight( 0xFFFFFF ) );
+
         this.renderer = new THREE.WebGLRenderer({antialias: true});//renderer
+        this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.shadowMap.enabled = true; //active l'ombre
         this.renderer.setSize(window.innerWidth, window.innerHeight);//initialise la taille de la scene
 
@@ -41,7 +47,6 @@ export default class Main{
             // this.initPhysics();
             this.initObjects();
             this.sphere = this.objects.children[0];
-            console.log(this.sphere);
         });
 
         this.camera.position.z = 5;
@@ -49,6 +54,9 @@ export default class Main{
 
         window.addEventListener('resize', this.onResize, false);
         document.body.appendChild(this.renderer.domElement);
+        this.renderer.outputEncoding = THREE.sRGBEncoding;
+
+        this.effect = new OutlineEffect( this.renderer );
 
         this.update();
         this.initEvents();
@@ -92,7 +100,7 @@ export default class Main{
 
 
         this.camera.position.z -= 1;
-        this.renderer.render(this.scene, this.camera);
+        this.effect.render(this.scene, this.camera);
     }
 }
 new Main();
