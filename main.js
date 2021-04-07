@@ -4,7 +4,6 @@ import Global from "./global.js";
 
 import { OutlineEffect } from '/lib/OutlineEffect.js';
 
-
 export default class Main{
     constructor() {
         this.update = this.update.bind(this);
@@ -103,4 +102,15 @@ export default class Main{
         this.effect.render(this.scene, this.camera);
     }
 }
-new Main();
+
+document.getElementById("start").addEventListener('click', event => {
+    new Main();
+    document.getElementById("start").remove();
+    document.querySelector("h1").remove();
+    document.getElementById("restart").style.display = "block";
+});
+
+document.getElementById("restart").addEventListener('click', event => {
+    document.querySelector("canvas").remove();
+    new Main();
+});

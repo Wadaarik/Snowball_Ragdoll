@@ -1,13 +1,14 @@
 import * as THREE from "./lib/three.module.js";
 import Global from "./global.js";
 
+import { GLTFLoader } from '/lib/GLTFLoader.js';
 
 export default class Objects extends THREE.Object3D{
     constructor() {
         super();
         this.update = this.update.bind(this);
 
-        this.snowball = new THREE.SphereGeometry(1, 32, 32);//la boule de neige
+        this.snowball = new THREE.SphereGeometry(1, 8, 6);//la boule de neige
         const ballMaterial = new THREE.MeshToonMaterial( { color: 0xffffff  } );//créer le material de la snowball
         // ballMaterial.envMap = Global.instance.envMap;
         // ballMaterial.envMapIntensity = .4;
@@ -28,10 +29,21 @@ export default class Objects extends THREE.Object3D{
 
 
         this.ground = new THREE.BoxGeometry(9, 1, 1000);//sol
-        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xF0F0F0 } );
+        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
         this.groundMesh = new THREE.Mesh( this.ground, groundMaterial );
         this.groundMesh.position.z = -480;
         this.groundMesh.position.y = -1;
+
+
+        // Skieurs
+        const loader = new GLTFLoader();
+        loader.load("./assets/skieur.glb", gltf => {
+            this.add(gltf.scene);
+        }, undefined,
+        error => {
+            console.log(error);
+        });
+
 
         this.add( this.snowballMesh );
         this.add( this.groundMesh );
