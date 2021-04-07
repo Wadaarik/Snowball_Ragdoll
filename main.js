@@ -32,6 +32,10 @@ export default class Main{
         // this.cube.name = "snowball";
         // this.scene.add(this.cube);
 
+        this.temp = new THREE.Vector3;
+        this.dir = new THREE.Vector3;
+        this.a = new THREE.Vector3;
+        this.b = new THREE.Vector3;
 
         this.skyTexture= new THREE.TextureLoader().load("./assets/background.jpg", ()=>{//créer le background
             this.skyEquipMap = new THREE.WebGLCubeRenderTarget(1024).fromEquirectangularTexture(this.renderer, this.skyTexture);
@@ -41,11 +45,16 @@ export default class Main{
             // this.initPhysics();
             this.initObjects();
             this.sphere = this.objects.children[0];
-            console.log(this.sphere);
         });
 
         this.camera.position.z = 5;
         this.camera.position.y = 2;
+        this.camera.lookAt( this.scene.position );
+
+        this.goal = new THREE.Object3D;
+        this.follow = new THREE.Object3D;
+
+        this.goal.add( this.camera );
 
         window.addEventListener('resize', this.onResize, false);
         document.body.appendChild(this.renderer.domElement);
@@ -90,9 +99,20 @@ export default class Main{
 
         this.objects && this.objects.update();
 
+        if (this.sphere){
+            this.a.lerp(this.sphere.position, 0.4);//permet de fixer la camera sur la position de la sphere
+            this.b.copy(this.goal.position);//Copie les valeurs des propriétés x, y et z du vecteur3 pour la position du goal (la caméra est fixé dans le goal)
 
-        this.camera.position.z -= 1;
+            this.dir.copy( this.a ).sub( this.b ).normalize();//Soustrait this.dir.copy(this.a) de this.b et prend la même direction
+            const dis = this.a.distanceTo( this.b );//Calcule la distance du vecteur a au vecteur b.
+            this.goal.position.addScaledVector( this.dir, dis );//Ajoute le multiple de this.dir et dis à la position de this.goal
+
+            this.camera.lookAt( this.sphere.position );//la camera "regarde" la position de la sphere
+        }
+
+        // this.camera.position.z -= 1;
         this.renderer.render(this.scene, this.camera);
+
     }
 }
 new Main();
