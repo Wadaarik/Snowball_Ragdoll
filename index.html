@@ -6,66 +6,11 @@
     <meta name="description" content="Free Web tutorials">
     <meta name="author" content="John Doe">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css">
+    <script type="module" src="main.js"></script>
     <title>Snowball Ragdoll 3D</title>
 </head>
 <body>
-    <h1>snowball-ragdoll</h1>
 
-    <script src="js/three.js"></script>
-    <script>
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
-
-        const geometry = new THREE.SphereGeometry();
-        const material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-        const sphere = new THREE.Mesh( geometry, material );
-        scene.add( sphere );
-
-        const geometry2 = new THREE.BoxGeometry(9, 1, 1000);
-        const material2 = new THREE.MeshBasicMaterial( {color: 0xCECECE } );
-        const rectangle = new THREE.Mesh( geometry2, material2 );
-        rectangle.position.z = -480;
-        rectangle.position.y = -1;
-        scene.add( rectangle );
-
-        camera.position.z = 5;
-        camera.position.y = 2;
-
-        function animate() {
-            requestAnimationFrame( animate );
-            sphere.rotation.x -= 0.01;
-            if(sphere.rotation.x > -60){
-                sphere.rotation.x *= 1.001;
-            }
-            else {
-                sphere.rotation.x -= 1.0619;
-            }
-            console.log(sphere.rotation.x);
-            //rectangle.position.z -= -0.1;
-            camera.position.z -= 1;
-            sphere.position.z -= 1;
-            renderer.render( scene, camera );
-        }
-        animate();
-
-        document.onkeydown = function(e) {
-            switch (e.keyCode) {
-                case 37:
-                    if(sphere.position.x > -3){
-                        sphere.position.x -= 3;
-                    }
-                break;
-                case 39:
-                    if(sphere.position.x < 3){
-                        sphere.position.x += 3;
-                    }
-                break;
-            }
-        };
-    </script>
 </body>
 </html>
