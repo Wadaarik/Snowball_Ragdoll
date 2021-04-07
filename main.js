@@ -7,8 +7,8 @@ export default class Main{
     constructor() {
         this.update = this.update.bind(this);
         this.onResize = this.onResize.bind(this);
-        this.initEvents = this.initEvents(this);
-        this.onKeyDown = this.onKeyDown(this);
+        this.initEvents = this.initEvents.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
 
         this.scene;
         this.camera;
@@ -40,6 +40,8 @@ export default class Main{
 
             // this.initPhysics();
             this.initObjects();
+            this.sphere = this.objects.children[0];
+            console.log(this.sphere);
         });
 
         this.camera.position.z = 5;
@@ -49,20 +51,21 @@ export default class Main{
         document.body.appendChild(this.renderer.domElement);
 
         this.update();
+        this.initEvents();
     }
     initEvents(){
-        document.body.addEventListener("keydown", this.onKeyDown, false);
+        document.body.addEventListener("keydown", this.onKeyDown);
     }
+
     onKeyDown (event){
-        var keyCode = event.which;
-        var sphere = this.snowballMesh;
+        var keyCode = event.keyCode;
         if (keyCode == 37) {
-            if(sphere.position.x > -3){
-                sphere.position.x -= 3;
+            if(this.sphere.position.x > -3){
+                this.sphere.position.x -= 3;
             }
         } else if (keyCode == 39) {
-            if(sphere.position.x < 3){
-                sphere.position.x += 3;
+            if(this.sphere.position.x < 3){
+                this.sphere.position.x += 3;
             }
         }
 
@@ -70,6 +73,7 @@ export default class Main{
     initObjects(){
 
         this.objects = new Objects();
+        // console.log(this.objects);
         this.scene.add(this.objects);
 
     }
