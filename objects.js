@@ -9,6 +9,12 @@ export default class Objects extends THREE.Object3D{
 
         this.snowball = new THREE.SphereGeometry(1, 32, 32);//la boule de neige
         const ballMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide  } );//créer le material de la snowball
+        ballMaterial.metalness = .1;
+        ballMaterial.roughness = .4;
+        ballMaterial.map = new THREE.TextureLoader().load("./assets/snow_jpg/snow_field_aerial_AO_1k.jpg");
+        ballMaterial.map.anisotropy = 12;
+        ballMaterial.map.wrapS = ballMaterial.map.wrapT = THREE.RepeatWrapping;//repete la texture
+        ballMaterial.map.repeat.set(3, 1);
         this.snowballMesh = new THREE.Mesh( this.snowball, ballMaterial );
         this.snowballMesh.castShadow = true; //la sphere cast les ombres
         this.snowballMesh.receiveShadow = true; //la sphere accepte de recevoir les ombres
