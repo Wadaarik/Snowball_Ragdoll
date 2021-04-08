@@ -4,6 +4,9 @@ import Global from "./global.js";
 
 import { OutlineEffect } from '/lib/OutlineEffect.js';
 
+// Score
+var score = 0;
+
 export default class Main {
     constructor() {
         this.update = this.update.bind(this);
@@ -15,6 +18,9 @@ export default class Main {
         this.camera;
         this.renderer;
         this.particleLight;
+
+        // Score
+        this.score = 0;
 
         this.init();
     }
@@ -130,6 +136,8 @@ export default class Main {
     update() {
         requestAnimationFrame(this.update);
 
+        
+
         this.objects && this.objects.update();
 
         if (this.sphere) {
@@ -147,13 +155,22 @@ export default class Main {
 }
 
 document.getElementById("start").addEventListener('click', event => {
+    score = 0;
     new Main();
     document.getElementById("start").remove();
     document.querySelector("h1").remove();
     document.getElementById("restart").style.display = "block";
+    document.getElementById("score").style.display = "block";
 });
 
 document.getElementById("restart").addEventListener('click', event => {
     document.querySelector("canvas").remove();
+    score = 0;
     new Main();
 });
+
+// Update du score chaque seconde
+setInterval(function(){
+    score++;
+    document.getElementById("score").innerHTML = score;
+}, 1000);
