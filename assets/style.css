@@ -7,7 +7,7 @@ html, body {
 
 @font-face {
   font-family: "No Virus";
-  src: url("no-virus.ttf");
+  src: url("no-virus.otf");
 }
 
 #interface {

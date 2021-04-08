@@ -27,8 +27,8 @@ export default class Objects extends THREE.Object3D{
         this.snowballMesh.position.y -= 1;
 
         this.planeGround = new THREE.BoxGeometry(9, 1, 1000);//sol
-        this.groundMesh = new THREE.Mesh( this.planeGround, groundMaterial );
         const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
+        this.groundMesh = new THREE.Mesh( this.planeGround, groundMaterial );
         this.groundMesh.castShadow = true; //le sol cast les ombres
         this.groundMesh.receiveShadow = true; //le sol accepte de recevoir les ombres
         this.groundMesh.position.z = -420;
