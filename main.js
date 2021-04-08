@@ -82,6 +82,23 @@ export default class Main{
     }
     initObjects(){
 
+        this.dlight = new THREE.DirectionalLight();//creer une directional light
+        this.dlight.position.z = 5;
+        this.dlight.position.x = 5;
+        this.dlight.position.y = 5;
+        this.dlight.castShadow = true;//active l'ombre pour la light
+        this.dlight.shadow.mapSize.width = 2048;
+        this.dlight.shadow.mapSize.height = 2048;
+        this.dlight.shadow.bias = -0.0001;
+        this.scene.add(this.dlight);
+
+        this.helper = new THREE.DirectionalLightHelper(this.dlight, 1);//permet de voir où se trouve la directional light
+        this.scene.add(this.helper);
+
+        this.alight = new THREE.AmbientLight();
+        this.alight.intensity = .4;
+        this.scene.add(this.alight);
+
         this.objects = new Objects();
         // console.log(this.objects);
         this.scene.add(this.objects);
