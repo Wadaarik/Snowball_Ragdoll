@@ -24,10 +24,13 @@ export default class Objects extends THREE.Object3D{
         this.snowballMesh.receiveShadow = true; //la sphere accepte de recevoir les ombres
         this.snowballMesh.name = 'snowball';
         this.snowballMesh.interaction = true;
+        this.snowballMesh.position.y -= 1;
 
         this.planeGround = new THREE.BoxGeometry(9, 1, 1000);//sol
-        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
         this.groundMesh = new THREE.Mesh( this.planeGround, groundMaterial );
+        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
+        this.groundMesh.castShadow = true; //le sol cast les ombres
+        this.groundMesh.receiveShadow = true; //le sol accepte de recevoir les ombres
         this.groundMesh.position.z = -420;
         this.groundMesh.position.y = -245;
         this.groundMesh.rotation.x = THREE.Math.degToRad(-30);
@@ -42,7 +45,9 @@ export default class Objects extends THREE.Object3D{
             console.log(gltf.scene.children[0]);
             gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
             gltf.scene.children[0].rotation.y = 3.14;
-            gltf.scene.children[0].position.z = -150;
+            gltf.scene.children[0].rotation.x = THREE.Math.degToRad(-30);
+            gltf.scene.children[0].position.y = -6;
+            gltf.scene.children[0].position.z = -10;
             scene.add(gltf.scene.children[0]);
             console.log(scene);
         });

@@ -29,9 +29,9 @@ export default class Main {
     init() {
         this.scene = new THREE.Scene();//scene
 
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);//camera
+        this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);//camera
 
-        this.scene.add(new THREE.AmbientLight(0xFFFFFF));
+        //this.scene.add(new THREE.AmbientLight(0xFFFFFF));
 
         this.renderer = new THREE.WebGLRenderer({antialias: true});//renderer
         this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -113,20 +113,20 @@ export default class Main {
     initObjects() {
 
         this.dlight = new THREE.DirectionalLight();//creer une directional light
-        this.dlight.position.z = 30;
+        this.dlight.position.z = 0;
         this.dlight.position.x = 5;
-        this.dlight.position.y = 20;
+        this.dlight.position.y = 5;
         this.dlight.castShadow = true;//active l'ombre pour la light
         this.dlight.shadow.mapSize.width = 2048;
         this.dlight.shadow.mapSize.height = 2048;
         this.dlight.shadow.bias = -0.0001;
         this.scene.add(this.dlight);
 
-        this.helper = new THREE.DirectionalLightHelper(this.dlight, 1);//permet de voir où se trouve la directional light
-        this.scene.add(this.helper);
+        //this.helper = new THREE.DirectionalLightHelper(this.dlight, 1);//permet de voir où se trouve la directional light
+        //this.scene.add(this.helper);
 
         this.alight = new THREE.AmbientLight();
-        this.alight.intensity = .4;
+        this.alight.intensity = .15;
         this.scene.add(this.alight);
 
         this.objects = new Objects();
