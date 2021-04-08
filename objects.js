@@ -24,11 +24,14 @@ export default class Objects extends THREE.Object3D{
         this.snowballMesh.receiveShadow = true; //la sphere accepte de recevoir les ombres
         this.snowballMesh.name = 'snowball';
         this.snowballMesh.interaction = true;
+        this.snowballMesh.position.y -= 1;
 
 
         this.ground = new THREE.BoxGeometry(9, 1, 1000);//sol
-        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
+        const groundMaterial = new THREE.MeshToonMaterial( {color: 0xEEEEEE } );
         this.groundMesh = new THREE.Mesh( this.ground, groundMaterial );
+        this.groundMesh.castShadow = true; //le sol cast les ombres
+        this.groundMesh.receiveShadow = true; //le sol accepte de recevoir les ombres
         this.groundMesh.position.z = -420;
         this.groundMesh.position.y = -245;
         this.groundMesh.rotation.x = THREE.Math.degToRad(-30);

@@ -5,6 +5,11 @@ html, body, * {
   overflow: hidden;
 }
 
+@font-face {
+  font-family: "No Virus";
+  src: url("no-virus.ttf");
+}
+
 #interface {
   position: absolute;
   width: 100vw;
@@ -12,11 +17,11 @@ html, body, * {
 }
 
 h1 {
-  font-family: 'Bungee Shade', cursive;
+  font-family: "No Virus", cursive;
   width: 100%;
   text-align: center;
-  color: rgb(49, 115, 236);
   position: absolute;
+  color: rgb(233, 144, 42);
   font-size: 72px;
   top: 30%; left: 50%;
   transform: translate(-50%, -50%);
@@ -28,14 +33,27 @@ h1 {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
+  background-color: transparent;
+  border: none;
 }
 
 #restart {
   display: none;
+  background-color: transparent;
+  border: none;
 }
 
 #score {
   display: none;
+  font-family: "No Virus", cursive;
+  color: rgb(233, 144, 42);
+  font-size: 120px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /*# sourceMappingURL=style.css.map */
