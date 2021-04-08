@@ -46,7 +46,9 @@ export default class Objects extends THREE.Object3D{
             console.log(gltf.scene.children[0]);
             gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
             gltf.scene.children[0].rotation.y = 3.14;
-            gltf.scene.children[0].position.z = -150;
+            gltf.scene.children[0].rotation.x = THREE.Math.degToRad(-30);
+            gltf.scene.children[0].position.y = -6;
+            gltf.scene.children[0].position.z = -10;
             scene.add(gltf.scene.children[0]);
             console.log(scene);
         });
