@@ -38,11 +38,12 @@ export default class Objects extends THREE.Object3D{
         // Skieurs
         var scene = this;
         const loader = new GLTFLoader();
-        loader.load('./assets/tree0.glb', function(gltf){
-            console.log(gltf.scene);
+        loader.load('./assets/skieur2.glb', function(gltf){
             console.log(scene);
+            console.log(gltf.scene);
             console.log(gltf.scene.children[0]);
-            gltf.scene.children[0].material = new THREE.MeshToonMaterial( {color: 0x00FF00} );
+            gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
+            gltf.scene.children[0].rotation.y = 3.14;
             gltf.scene.children[0].position.z = -150;
             scene.add(gltf.scene.children[0]);
             console.log(scene);
