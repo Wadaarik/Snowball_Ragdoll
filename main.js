@@ -24,6 +24,9 @@ export default class Main {
         this.score = 0;
 
         this.init();
+
+        this.scaleMax = 2;
+        this.currentScale = 1;
     }
 
     init() {
@@ -136,7 +139,7 @@ export default class Main {
 
         this.addToWorld(this.objects.ground, 0, new CANNON.Box(new CANNON.Vec3(9/2, 1/2, 1000/2)));//ajoute le ground dans le monde
 
-        this.SphereBody = this.addToWorld(this.objects.children[0], 1, new CANNON.Sphere(1));
+        this.SphereBody = this.addToWorld(this.objects.children[0], 5, new CANNON.Sphere(1));
         this.SphereBody.name = "snowballBody";
         console.log(this.objects.ground);
 
@@ -212,17 +215,25 @@ export default class Main {
             this.lastTime = time;
         }
 
-        this.scaleMax = 10;
-        this.currentScale = 1;
 
         // setInterval(()=>{
-        //     if (this.currentScale < this.scaleMax){
-        //         this.currentScale += .1;
-        //
-        //         this.SphereBody.shapes[0].radius = .25
-        //
-        //     }
-        // }, 500);
+        if (this.objects){
+            if (this.currentScale < this.scaleMax){
+                this.currentScale += .001;
+
+                this.objects.children[0].scale.set(this.currentScale, this.currentScale, this.currentScale);
+
+                this.SphereBody.shapes[0].radius = .25 * this.currentScale;
+                console.log(this.currentScale);
+                this.SphereBody.shapes[0].boudingSphereRadius = .25 * this.currentScale;
+                this.SphereBody.updateBoundingRadius();
+
+                // console.log("spherebody : ", this.SphereBody.shapes);
+
+            }
+        }
+
+        // }, 2000);
 
     }
 }
