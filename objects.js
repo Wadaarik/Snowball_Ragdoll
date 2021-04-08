@@ -25,14 +25,13 @@ export default class Objects extends THREE.Object3D{
         this.snowballMesh.name = 'snowball';
         this.snowballMesh.interaction = true;
 
-
-        this.ground = new THREE.BoxGeometry(9, 1, 1000);//sol
+        this.planeGround = new THREE.BoxGeometry(9, 1, 1000);//sol
         const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
-        this.groundMesh = new THREE.Mesh( this.ground, groundMaterial );
+        this.groundMesh = new THREE.Mesh( this.planeGround, groundMaterial );
         this.groundMesh.position.z = -420;
         this.groundMesh.position.y = -245;
         this.groundMesh.rotation.x = THREE.Math.degToRad(-30);
-
+        this.groundMesh.name = 'Ground';
 
         // Skieurs
         var scene = this;
@@ -75,11 +74,15 @@ export default class Objects extends THREE.Object3D{
         //    scene.add( glb.scene);
         //});
 
-
-        
         this.add( this.snowballMesh );
         this.add( this.groundMesh );
+
     }
+
+    get ground(){
+        return this.groundMesh;
+    }
+
     update(){
         this.snowballMesh.rotation.x -= 0.01;
 
@@ -88,6 +91,7 @@ export default class Objects extends THREE.Object3D{
         } else {
             this.snowballMesh.rotation.x -= 0.0619;
         }
+
 
         // console.log(this.snowballMesh.rotation.x);
         // this.snowballMesh.position.z -= 1;

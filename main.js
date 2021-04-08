@@ -13,6 +13,7 @@ export default class Main {
         this.onResize = this.onResize.bind(this);
         this.initEvents = this.initEvents.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
+        this.initPhysics = this.initPhysics.bind(this);
 
         this.scene;
         this.camera;
@@ -54,7 +55,7 @@ export default class Main {
             Global.instance.envMap = this.skyEquipMap;//instancie les futurs materiaux via singleton
             this.scene.background = this.skyEquipMap;
 
-            // this.initPhysics();
+            this.initPhysics();
             this.initObjects();
 
             this.sphere = this.objects.children[0];
@@ -68,7 +69,7 @@ export default class Main {
         this.goal = new THREE.Object3D;
         this.follow = new THREE.Object3D;
 
-        this.goal.add(this.camera);
+        this.scene.add(this.camera);
 
         window.addEventListener('resize', this.onResize, false);
         document.body.appendChild(this.renderer.domElement);
@@ -87,16 +88,27 @@ export default class Main {
     onKeyDown(event) {
         var keyCode = event.keyCode;
         if (keyCode == 37) {
-            if (this.sphere.position.x > -3) {
-                this.sphere.position.x -= .2;
+            if (this.SphereBody.position.x > -3) {
+                this.SphereBody.position.x -= .2;
             }
         } else if (keyCode == 39) {
-            if (this.sphere.position.x < 3) {
-                this.sphere.position.x += .2;
+            if (this.SphereBody.position.x < 3) {
+                this.SphereBody.position.x += .2;
             }
         }
 
     }
+
+    initPhysics(){
+        this.meshes = [];
+        this.bodys = [];
+        this.world = new CANNON.World();
+        this.world.gravity.set(0, - 9.8, 0);// m/s²
+        this.world.broadphase = new CANNON.SAPBroadphase(this.world);
+        this.frameRate = 60.0; //fps
+        this.fixedTimeStep = 1.0 / this.frameRate; // seconds
+    }
+
 
     initObjects() {
 
@@ -122,6 +134,33 @@ export default class Main {
 
         this.scene.add(this.objects);
 
+        this.addToWorld(this.objects.ground, 0, new CANNON.Box(new CANNON.Vec3(9/2, 1/2, 1000/2)));//ajoute le ground dans le monde
+
+        this.SphereBody = this.addToWorld(this.objects.children[0], 1, new CANNON.Sphere(1));
+        this.SphereBody.name = "snowballBody";
+        console.log(this.objects.ground);
+
+    }
+
+    addToWorld(mesh, mass, shape){
+        var position = new CANNON.Vec3();
+        position.copy(mesh.position);
+
+        var quaternion = new CANNON.Quaternion();
+        quaternion.copy(mesh.quaternion);
+
+        var body = new CANNON.Body({//creer un body, donne une position et une quaterion du dessus, une shape et une masse
+            position: position,
+            quaternion: quaternion,
+            shape: shape,
+            mass: mass
+        });
+
+        this.world.addBody(body);
+        this.meshes.push(mesh);
+        this.bodys.push(body);
+
+        return body;
     }
 
     onResize() {//permet de resizer automatiquement la scene en fonction de la taille de la fenêtre
@@ -133,7 +172,9 @@ export default class Main {
         this.renderer.setSize(width, height);
     }
 
-    update() {
+
+
+    update(time) {
         requestAnimationFrame(this.update);
 
         
@@ -141,16 +182,38 @@ export default class Main {
         this.objects && this.objects.update();
 
         if (this.sphere) {
-            this.a.lerp(this.sphere.position, 0.4);//permet de fixer la camera sur la position de la sphere
-            this.b.copy(this.goal.position);//Copie les valeurs des propriétés x, y et z du vecteur3 pour la position du goal (la caméra est fixé dans le goal)
-
-            this.dir.copy( this.a ).sub( this.b ).normalize();//Soustrait this.dir.copy(this.a) de this.b et prend la même direction
-            const dis = this.a.distanceTo( this.b );//Calcule la distance du vecteur a au vecteur b.
-            this.goal.position.addScaledVector( this.dir, dis );//Ajoute le multiple de this.dir et dis à la position de this.goal
+            // this.a.lerp(this.sphere.position, 0.4);//permet de fixer la camera sur la position de la sphere
+            // this.b.copy(this.goal.position);//Copie les valeurs des propriétés x, y et z du vecteur3 pour la position du goal (la caméra est fixé dans le goal)
+            //
+            // this.dir.copy( this.a ).sub( this.b ).normalize();//Soustrait this.dir.copy(this.a) de this.b et prend la même direction
+            // const dis = this.a.distanceTo( this.b );//Calcule la distance du vecteur a au vecteur b.
+            // this.goal.position.addScaledVector( this.dir, dis );//Ajoute le multiple de this.dir et dis à la position de this.goal
 
             this.effect.render(this.scene, this.camera);
+
+            // this.camera.target = this.SphereBody.position;
+            this.camera.position.z = this.SphereBody.position.z +2;
+            this.camera.position.y = this.SphereBody.position.y +10;
             // this.camera.lookAt( this.sphere.position );
         }
+
+        //CANNONJS
+        if (this.bodys){
+            for (let i=0; i<this.bodys.length; i++){//parcours le tableau body
+                if (this.bodys[i].world){//verifie que le body a un world (intégré à l'univers cannonjs)
+                    this.meshes[i].position.copy(this.bodys[i].position);//copy toutes les propriétés de son vecteur positions en mesh
+                    this.meshes[i].quaternion.copy(this.bodys[i].quaternion);//copy toutes les propriétés de son vecteur rotation (quaterion) en mesh
+                }
+            }
+            if (this.lastTime !== undefined){//met à jour cannonjs
+                var delta = (time - this.lastTime) / 1000;
+                this.world.step(this.fixedTimeStep, delta, this.frameRate);
+            }
+            this.lastTime = time;
+        }
+
+        
+
     }
 }
 
