@@ -212,7 +212,17 @@ export default class Main {
             this.lastTime = time;
         }
 
-        
+        this.scaleMax = 10;
+        this.currentScale = 1;
+
+        // setInterval(()=>{
+        //     if (this.currentScale < this.scaleMax){
+        //         this.currentScale += .1;
+        //
+        //         this.SphereBody.shapes[0].radius = .25
+        //
+        //     }
+        // }, 500);
 
     }
 }
