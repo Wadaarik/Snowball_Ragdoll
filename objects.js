@@ -19,8 +19,9 @@ export default class Objects extends THREE.Object3D{
         this.ground = new THREE.BoxGeometry(9, 1, 1000);//sol
         const groundMaterial = new THREE.MeshBasicMaterial( {color: 0xCECECE, side: THREE.DoubleSide } );
         this.groundMesh = new THREE.Mesh( this.ground, groundMaterial );
-        this.groundMesh.position.z = -480;
-        this.groundMesh.position.y = -1;
+        this.groundMesh.position.z = -420;
+        this.groundMesh.position.y = -245;
+        this.groundMesh.rotation.x = THREE.Math.degToRad(-30);
 
         this.add( this.snowballMesh );
         this.add( this.groundMesh );
@@ -35,6 +36,6 @@ export default class Objects extends THREE.Object3D{
         }
 
         // console.log(this.snowballMesh.rotation.x);
-        this.snowballMesh.position.z -= 1;
+        // this.snowballMesh.position.z -= 1;
     }
 }

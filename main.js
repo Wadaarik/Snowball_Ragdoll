@@ -48,7 +48,8 @@ export default class Main{
         });
 
         this.camera.position.z = 5;
-        this.camera.position.y = 2;
+        this.camera.position.y = 5;
+        this.camera.position.x = 0;
         this.camera.lookAt( this.scene.position );
 
         this.goal = new THREE.Object3D;
