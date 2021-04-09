@@ -131,32 +131,20 @@ export default class Main {
         this.alight.intensity = .15;
         this.scene.add(this.alight);
 
-        // Skieurs
-        const loader = new GLTFLoader();
-        loader.load('./assets/skieur2.glb', function(gltf){
-            console.log(scene);
-            console.log(gltf.scene);
-            console.log(gltf.scene.children[0]);
-            gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
-            gltf.scene.children[0].rotation.y = 3.14;
-            gltf.scene.children[0].rotation.x = THREE.Math.degToRad(-30);
-            gltf.scene.children[0].position.y = -6;
-            gltf.scene.children[0].position.z = -10;
-            scene.add(gltf.scene.children[0]);
-            console.log(scene);
+        this.objects = new Objects(()=>{
+            console.log(this.objects);
+
+            this.scene.add(this.objects);
+    
+            this.addToWorld(this.objects.ground, 0, new CANNON.Box(new CANNON.Vec3(9/2, 1/2, 1000/2)));//ajoute le ground dans le monde
+    
+            this.SphereBody = this.addToWorld(this.objects.children[0], 5, new CANNON.Sphere(1));
+            this.SphereBody.name = "snowballBody";
+    
+            this.SkieurBody = this.addToWorld(this.objects.children[2], 5, new CANNON.Box(new CANNON.Vec3(2/2, 4/2, 2/2)));
+            this.SkieurBody.name = "skieurBody";
         });
-
-        this.objects = new Objects();
-        // console.log(this.objects);
-
-        this.scene.add(this.objects);
-
-        this.addToWorld(this.objects.ground, 0, new CANNON.Box(new CANNON.Vec3(9/2, 1/2, 1000/2)));//ajoute le ground dans le monde
-
-        this.SphereBody = this.addToWorld(this.objects.children[0], 5, new CANNON.Sphere(1));
-        this.SphereBody.name = "snowballBody";
-        console.log(this.objects.ground);
-
+    
     }
 
     addToWorld(mesh, mass, shape){
@@ -211,8 +199,10 @@ export default class Main {
             this.effect.render(this.scene, this.camera);
 
             // this.camera.target = this.SphereBody.position;
-            this.camera.position.z = this.SphereBody.position.z +2;
-            this.camera.position.y = this.SphereBody.position.y +10;
+            if(this.SphereBody){
+                this.camera.position.z = this.SphereBody.position.z +2;
+                this.camera.position.y = this.SphereBody.position.y +10;
+            }
             // this.camera.lookAt( this.sphere.position );
         }
 
@@ -239,10 +229,13 @@ export default class Main {
 
                 this.objects.children[0].scale.set(this.currentScale, this.currentScale, this.currentScale);
 
-                this.SphereBody.shapes[0].radius = .25 * this.currentScale;
-                console.log(this.currentScale);
-                this.SphereBody.shapes[0].boudingSphereRadius = .25 * this.currentScale;
-                this.SphereBody.updateBoundingRadius();
+                if(this.SphereBody){
+                    this.SphereBody.shapes[0].radius = .25 * this.currentScale;
+                    //console.log(this.currentScale);
+                    this.SphereBody.shapes[0].boudingSphereRadius = .25 * this.currentScale;
+                    this.SphereBody.updateBoundingRadius();
+                }
+                
 
                 // console.log("spherebody : ", this.SphereBody.shapes);
 
