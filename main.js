@@ -150,11 +150,13 @@ export default class Main {
     
             this.addToWorld(this.objects.ground, 0, new CANNON.Box(new CANNON.Vec3(9/2, 1/2, 1000/2)));//ajoute le ground dans le monde
     
-            this.SphereBody = this.addToWorld(this.objects.children[0], 5, new CANNON.Sphere(1));
+            this.SphereBody = this.addToWorld(this.objects.children[0], 20, new CANNON.Sphere(1));
             this.SphereBody.name = "snowballBody";
     
-            this.SkieurBody = this.addToWorld(this.objects.children[2], 5, new CANNON.Box(new CANNON.Vec3(2/2, 4/2, 2/2)));
-            this.SkieurBody.name = "skieurBody";
+            for(let nombre = 0; nombre <= 5; nombre++){
+                this.SkieurBody = this.addToWorld(this.objects.children[nombre+2], 5, new CANNON.Box(new CANNON.Vec3(1/2, 2/2, 2/2)));
+                this.SkieurBody.name = "skieurBody";
+            }
         });
     
     }
