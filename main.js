@@ -141,7 +141,7 @@ export default class Main {
             this.SphereBody = this.addToWorld(this.objects.children[0], 20, new CANNON.Sphere(1));
             this.SphereBody.name = "snowballBody";
     
-            for(let nombre = 0; nombre <= 5; nombre++){
+            for(let nombre = 0; nombre <= 15; nombre++){
                 this.SkieurBody = this.addToWorld(this.objects.children[nombre+2], 5, new CANNON.Box(new CANNON.Vec3(1/2, 2/2, 2/2)));
                 this.SkieurBody.name = "skieurBody";
             }

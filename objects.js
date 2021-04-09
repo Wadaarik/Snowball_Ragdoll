@@ -25,9 +25,11 @@ export default class Objects extends THREE.Object3D{
         this.snowballMesh.receiveShadow = true; //la sphere accepte de recevoir les ombres
         this.snowballMesh.name = 'snowball';
         this.snowballMesh.interaction = true;
-        this.snowballMesh.position.y -= 1;
+        this.snowballMesh.position.z = 0;
+        this.snowballMesh.position.y = 0;
+        this.snowballMesh.rotation.x = 0;
 
-        this.planeGround = new THREE.BoxGeometry(9, 1, 1000);//sol
+        this.planeGround = new THREE.BoxGeometry(15, 1, 1000);//sol
         const groundMaterial = new THREE.MeshToonMaterial( {color: 0xDDDDDD } );
         this.groundMesh = new THREE.Mesh( this.planeGround, groundMaterial );
         this.groundMesh.castShadow = true; //le sol cast les ombres
@@ -53,19 +55,42 @@ export default class Objects extends THREE.Object3D{
                 skieur.rotation.x = THREE.Math.degToRad(-25);
                 console.log(positionX);
                 skieur.position.x = positionX;
-                skieur.position.y = -(positionZ*0.25);
+                skieur.position.y = positionZ*0.4;
+                console.log(skieur.position.y);
                 console.log(positionZ);
                 skieur.position.z = positionZ;
                 scene.add(skieur);
-                scene.callback();
                 //console.log(scene);
             });
         }
 
-        for(let nombre = 0; nombre <= 5; nombre++){
-            skieur(Math.floor(Math.random() * -50), Math.floor(Math.random() * 3)-3);
+        for(let nombre = 0; nombre <= 15; nombre++){
+            skieur(Math.floor(Math.random() * -500)-15, Math.floor(Math.random() * 3)-3);
         }
 
+        // Sapins
+        function sapin(positionZ, positionX){
+            loader.load('./assets/tree0.glb', function(gltf){
+                var sapin = gltf.scene;
+                var sapinMesh = gltf.scene.children[0];
+                sapinMesh.material = new THREE.MeshToonMaterial( {color: 0x00FF00} );
+                console.log("PositionX : "+positionX);
+                sapin.position.x = positionX;
+                sapin.position.y = positionZ*0.5;
+                console.log("PositionY : "+sapin.position.y);
+                console.log("PositionZ : "+positionZ);
+                sapin.position.z = positionZ;
+                scene.add(sapin);
+            });
+        }
+
+        for(let nombre = 0; nombre <= 15; nombre++){
+            sapin(Math.floor(Math.random() * -500)-15, Math.floor(Math.random() * 3)-3);
+        }
+
+        setTimeout(()=>{
+            this.callback();
+        }, 2000);
         // loader.load(
         //     "./assets/skieur.glb",
         //     ( glb ) => {
