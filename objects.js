@@ -33,27 +33,38 @@ export default class Objects extends THREE.Object3D{
         this.groundMesh.castShadow = true; //le sol cast les ombres
         this.groundMesh.receiveShadow = true; //le sol accepte de recevoir les ombres
         this.groundMesh.position.z = -420;
-        this.groundMesh.position.y = -245;
-        this.groundMesh.rotation.x = THREE.Math.degToRad(-30);
+        this.groundMesh.position.y = -199;
+        this.groundMesh.rotation.x = THREE.Math.degToRad(-25);
         this.groundMesh.name = 'Ground';
 
         // Skieurs
         var scene = this;
         const loader = new GLTFLoader();
-        loader.load('./assets/skieur2.glb', function(gltf){
-            //console.log(scene);
-            //console.log(gltf.scene);
-            //console.log(gltf.scene.children[0]);
-            gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
-            gltf.scene.children[0].rotation.y = 3.14;
-            gltf.scene.children[0].rotation.x = THREE.Math.degToRad(-30);
-            gltf.scene.children[0].position.y = -6;
-            gltf.scene.children[0].position.z = -10;
-            scene.add(gltf.scene.children[0]);
-            console.log(scene.callback);
-            scene.callback();
-            //console.log(scene);
-        });
+
+        function skieur(positionZ, positionX){
+            loader.load('./assets/skieur2.glb', function(gltf){
+                //console.log(scene);
+                //console.log(gltf.scene);
+                //console.log(gltf.scene.children[0]);
+                var skieur = gltf.scene.children[0];
+                var skieurMesh = gltf.scene.children[0].children[0];
+                skieurMesh.material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
+                skieur.rotation.y = 3.14;
+                skieur.rotation.x = THREE.Math.degToRad(-25);
+                console.log(positionX);
+                skieur.position.x = positionX;
+                skieur.position.y = -5;
+                console.log(positionZ);
+                skieur.position.z = positionZ;
+                scene.add(skieur);
+                scene.callback();
+                //console.log(scene);
+            });
+        }
+
+        for(let nombre = 0; nombre <= 5; nombre++){
+            skieur(Math.floor(Math.random() * -50), Math.floor(Math.random() * 3)-3);
+        }
 
         // loader.load(
         //     "./assets/skieur.glb",
