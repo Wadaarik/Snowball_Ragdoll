@@ -36,22 +36,6 @@ export default class Objects extends THREE.Object3D{
         this.groundMesh.rotation.x = THREE.Math.degToRad(-30);
         this.groundMesh.name = 'Ground';
 
-        // Skieurs
-        var scene = this;
-        const loader = new GLTFLoader();
-        loader.load('./assets/skieur2.glb', function(gltf){
-            console.log(scene);
-            console.log(gltf.scene);
-            console.log(gltf.scene.children[0]);
-            gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
-            gltf.scene.children[0].rotation.y = 3.14;
-            gltf.scene.children[0].rotation.x = THREE.Math.degToRad(-30);
-            gltf.scene.children[0].position.y = -6;
-            gltf.scene.children[0].position.z = -10;
-            scene.add(gltf.scene.children[0]);
-            console.log(scene);
-        });
-
         // loader.load(
         //     "./assets/skieur.glb",
         //     ( glb ) => {

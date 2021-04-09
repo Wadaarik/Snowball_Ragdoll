@@ -112,7 +112,6 @@ export default class Main {
         this.fixedTimeStep = 1.0 / this.frameRate; // seconds
     }
 
-
     initObjects() {
 
         this.dlight = new THREE.DirectionalLight();//creer une directional light
@@ -131,6 +130,21 @@ export default class Main {
         this.alight = new THREE.AmbientLight();
         this.alight.intensity = .15;
         this.scene.add(this.alight);
+
+        // Skieurs
+        const loader = new GLTFLoader();
+        loader.load('./assets/skieur2.glb', function(gltf){
+            console.log(scene);
+            console.log(gltf.scene);
+            console.log(gltf.scene.children[0]);
+            gltf.scene.children[0].children[0].material = new THREE.MeshToonMaterial( {color: 0xFF4500} );
+            gltf.scene.children[0].rotation.y = 3.14;
+            gltf.scene.children[0].rotation.x = THREE.Math.degToRad(-30);
+            gltf.scene.children[0].position.y = -6;
+            gltf.scene.children[0].position.z = -10;
+            scene.add(gltf.scene.children[0]);
+            console.log(scene);
+        });
 
         this.objects = new Objects();
         // console.log(this.objects);
@@ -174,6 +188,8 @@ export default class Main {
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(width, height);
     }
+
+    
 
 
 
