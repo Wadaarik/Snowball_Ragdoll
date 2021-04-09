@@ -53,7 +53,7 @@ export default class Objects extends THREE.Object3D{
                 skieur.rotation.x = THREE.Math.degToRad(-25);
                 console.log(positionX);
                 skieur.position.x = positionX;
-                skieur.position.y = -5;
+                skieur.position.y = -(positionZ*0.25);
                 console.log(positionZ);
                 skieur.position.z = positionZ;
                 scene.add(skieur);
