@@ -9,7 +9,6 @@ html, body {
   font-family: "No Virus";
   src: url("no-virus.otf");
 }
-
 #interface {
   position: absolute;
   width: 100vw;
@@ -21,9 +20,10 @@ h1 {
   width: 100%;
   text-align: center;
   position: absolute;
-  color: rgb(233, 144, 42);
+  color: #e9902a;
   font-size: 72px;
-  top: 30%; left: 50%;
+  top: 30%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -31,7 +31,8 @@ h1 {
   width: 15%;
   text-align: center;
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: transparent;
   border: none;
@@ -46,7 +47,7 @@ h1 {
 #score {
   display: none;
   font-family: "No Virus", cursive;
-  color: rgb(233, 144, 42);
+  color: #e9902a;
   font-size: 120px;
   text-align: center;
   width: 100%;
@@ -54,6 +55,32 @@ h1 {
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#left, #right {
+  display: none;
+  position: absolute;
+  top: 50vh;
+  font-size: xxx-large;
+  font-family: "No Virus", cursive;
+  border: none;
+  border-radius: 50%;
+  background: #e9902a;
+  padding: 0 15px;
+}
+
+#left {
+  left: 5vw;
+}
+
+#right {
+  right: 5vw;
+}
+
+@media screen and (min-width: 400px) {
+  #left, #right {
+    display: none !important;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

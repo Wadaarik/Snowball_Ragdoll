@@ -3,6 +3,7 @@ import Objects from "./objects.js";
 import Global from "./global.js";
 
 import { OutlineEffect } from '/lib/OutlineEffect.js';
+import { GLTFLoader } from '/lib/GLTFLoader.js';
 
 // Score
 var score = 0;
@@ -86,6 +87,17 @@ export default class Main {
 
     initEvents() {
         document.body.addEventListener("keydown", this.onKeyDown);
+
+        document.getElementById("left").addEventListener('touchstart', event => {
+            if (this.SphereBody.position.x > -3) {
+                this.SphereBody.position.x -= .2;
+            }
+        });
+        document.getElementById("right").addEventListener('touchstart', event => {
+            if (this.SphereBody.position.x < 3) {
+                this.SphereBody.position.x += .2;
+            }
+        });
     }
 
     onKeyDown(event) {
@@ -247,6 +259,7 @@ export default class Main {
     }
 }
 
+
 document.getElementById("start").addEventListener('click', event => {
     score = 0;
     new Main();
@@ -254,6 +267,8 @@ document.getElementById("start").addEventListener('click', event => {
     document.querySelector("h1").remove();
     document.getElementById("restart").style.display = "block";
     document.getElementById("score").style.display = "block";
+    document.getElementById("left").style.display = "block";
+    document.getElementById("right").style.display = "block";
 });
 
 document.getElementById("restart").addEventListener('click', event => {
